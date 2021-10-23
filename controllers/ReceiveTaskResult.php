@@ -4,6 +4,7 @@
 /*
 
     To run ngrok
+    cd to downloads folder
     ./ngrok http http://localhost:8888
     in htdocs index.php file will be triggered
 
@@ -11,31 +12,44 @@
 require_once __DIR__ . '/../repositories/KeywordTasks.php';
 require_once __DIR__ . '/../controllers/TaskResultParser.php';
 
-$received_response_zipped = file_get_contents('php://input');
+$task_id = $_GET['id'];
+$tag = $_GET['tag'];
 
-if (!empty($received_response_zipped)) {
+if( !empty($task_id) && isset($tag) ) {
 
-
-    $response = json_decode(gzdecode($received_response_zipped), true);
-
-    if (isset($response['status_code']) and $response['status_code'] === 20000) {
-
-        _in_logit_POST("result", $response);
-        //do something with results
-
-        //TODO: remove this sleep
+    $task_id = stripslashes(strip_tags(htmlspecialchars($task_id, ENT_QUOTES)));
+    try {
+        //TODO: remove this sleep. Put this sleep because DFSEO was sending the result at once in demo
         sleep(5);
 
-        try {
-            $task_id = $response['tasks']['0']['id'];
+        $keyword_task_data_from_db = KeywordTasks::getTaskDataByDFSTaskId($task_id);
+        if( empty($keyword_task_data_from_db)) {
 
-            //DataForSeo Task ID
-            $keyword_task_data_from_db = KeywordTasks::getTaskDataByDFSTaskId($task_id);
-            if (empty($keyword_task_data_from_db)) {
+            throw new Exception('Task id: ' . $task_id . ' was not found in keyword_tasks table. This activity happened at File/Line: '.__File__.' / '. __LINE__);
 
-                throw new Exception('Task was not found from keyword_tasks table having id: ' . $task_id);
 
-            } else {
+        }
+    } catch (Exception $e) {
+
+        print_r($e->getMessage());
+
+    }
+
+
+    if( !empty($keyword_task_data_from_db) ) {
+
+        $received_response_zipped = file_get_contents('php://input');
+
+        if (!empty($received_response_zipped)) {
+
+            $response = json_decode(gzdecode($received_response_zipped), true);
+
+            if (isset($response['status_code']) and $response['status_code'] === 20000) {
+
+                //TODO: remove the following log function as well
+                _in_logit_POST("result", $response);
+                //do something with results
+                //$task_id = $response['tasks']['0']['id'];
 
                 try {
 
@@ -47,24 +61,26 @@ if (!empty($received_response_zipped)) {
 
                 }
 
+                $err[] = "ok";
+
+            } else {
+
+                $err[] = "error";
             }
+        } else {
 
+            $err[] = "empty POST";
 
-        } catch (Exception $e) {
-
-            print_r($e->getMessage());
         }
 
 
-        $err[] = "ok";
-    } else {
-        //_in_logit_POST('error decode', $received_response_zipped);
-        $err[] = "error";
+
     }
-} else {
-    $err[] = "empty POST";
+
 
 }
+
+
 
 
 function _in_logit_POST($id_message, $data)

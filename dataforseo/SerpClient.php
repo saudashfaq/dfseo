@@ -22,7 +22,7 @@ class SerpClient
 
 
     //const WEBHOOK_REC_URL = 'https://webhook.site/2174f745-e851-4724-9ed8-079de19f259f';
-    const WEBHOOK_REC_URL = 'https://6b40-101-50-69-90.ngrok.io/index.php'; //always put / after the domain name otherwise it will be considered as invalid url
+    const WEBHOOK_REC_URL = 'https://43b1-101-50-69-90.ngrok.io/index.php'; //always put / after the domain name otherwise it will be considered as invalid url
     const BASE_URL_SANDBOX = 'https://sandbox.dataforseo.com/';
     const BASE_URL_LIVE = 'https://api.dataforseo.com/';
 

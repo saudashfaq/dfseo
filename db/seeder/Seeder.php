@@ -146,19 +146,27 @@ class Seeder
 
         $values = '';
 
-        $user_account_ids = $this->getUserAccountIds();
-        $campaign_ids = $this->getCampaignIds();
+        //$user_account_ids = $this->getUserAccountIds();
+        $campaigns = $this->getCampaigns();
 
 
+        /*echo '<pre>';
+        print_r($campaigns);
+        echo '<hr>';
+        echo $campaign_index_val;
+        echo '<hr>';
+        die();*/
         for ($x = 1; $x <= $how_many; $x++) {
+
+            $campaign_index_val = array_rand($campaigns);
 
             $word_count = mt_rand(1,5);
             $date = $this->faker->dateTimeBetween('-3 days', '+3 days');
             $created_at = $updated_at = $date->format('Y-m-d H:i:s');
             $latest_rank_checked_on = $date->format('Y-m-d');
 
-            $user_account_id = $user_id = $user_account_ids[array_rand($user_account_ids)];
-            $campaign_id = $campaign_ids[array_rand($campaign_ids)];
+            $user_account_id = $user_id = $campaigns[$campaign_index_val]['user_account_id'];
+            $campaign_id = $campaigns[$campaign_index_val]['campaign_id'];
             $keyword = $this->faker->words($word_count , true);
             //$latest_rank_checked_on = $this->faker->dateTimeBetween('-3 days', '+3 days')->format('Y-m-d');
             //$created_at = $this->faker->dateTimeBetween('-1 week', '+1 week')->format('Y-m-d H:i:s');
@@ -222,6 +230,23 @@ class Seeder
         return array_column($res, 'campaign_id');
 
     }
+
+
+    private function getCampaigns() {
+
+        $res = DB::run_mysql_query("Select campaign_id, user_account_id from campaigns", " Line Number: " . __LINE__);
+
+        if( $res->num_rows > 0 ) {
+
+            $res = mysqli_fetch_all($res, MYSQLI_ASSOC);
+
+        }
+
+        return $res;
+
+    }
+
+
 
     public function deleteDatabase() {
 
