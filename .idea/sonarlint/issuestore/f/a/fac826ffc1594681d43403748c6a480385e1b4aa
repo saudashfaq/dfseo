@@ -1,0 +1,9 @@
+
+I	php:S1135
+"4Complete the task associated to this "TODO" comment.(µ­àª
+j	php:S1192W"PDefine a constant instead of duplicating this literal "Error at line: " 3 times.(ÿá¿Þøÿÿÿÿ
+>	php:S1125S")Remove the literal "false" boolean value.(¯¿µ½
+C	php:S1125b")Remove the literal "false" boolean value.(ƒÍ íøÿÿÿÿ
+6	php:S1116G"Remove this empty statement.(œæÕÔþÿÿÿÿ
+4php:S125‰"Remove this commented out code.(˜¼úã
+Kphp:S131$"7Add a "case default" clause to this "switch" statement.(—Í”¶

@@ -1,0 +1,13 @@
+
+I	php:S1135
+"4Complete the task associated to this "TODO" comment.(µ­àª
+N	php:S1135;"4Complete the task associated to this "TODO" comment.(ûÿüìþÿÿÿÿ
+>	php:S1125U")Remove the literal "false" boolean value.(¯¿µ½
+>	php:S1125`")Remove the literal "false" boolean value.(¯¿µ½
+L	php:S1481"2Remove this unused "$current_time" local variable.(³Æ‡†ûÿÿÿÿ
+G	php:S1481"2Remove this unused "$current_date" local variable.(¨Óõþ
+F	php:S11729"1Remove the unused function parameter "$keywords".(ù§ö¨
+C	php:S1172_".Remove the unused function parameter "$where".(”­âô
+J	php:S1068"5Remove this unused "$all_table_fields" private field.(ŽÉÚœ
+o	php:S4144_"ZUpdate this method so that its implementation is not identical to "insertData" on line 84.(”­âô
+Q	php:S1155H"7Use empty() to check whether the array is empty or not.(ú«áðúÿÿÿÿ
